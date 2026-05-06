@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-family: 'Inter', system-ui, sans-serif; }
+  body { background: #f1f5f9; color: #0f172a; margin: 0; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+}
+
+@layer utilities {
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .fade-in { animation: fadeIn 0.2s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
