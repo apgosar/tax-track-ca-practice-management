@@ -1,4 +1,9 @@
-export const SHEET_ID = '1M1mdMB4nKuRL5g3MAZaDDwwdWdaSjJjq_OApA2S5g7w';
+// Sheet ID is configured via VITE_SPREADSHEET_ID environment variable at build time.
+// Fallback to the default sheet ID if the variable is not set.
+export const SHEET_ID =
+  import.meta.env.VITE_SPREADSHEET_ID ||
+  '1M1mdMB4nKuRL5g3MAZaDDwwdWdaSjJjq_OApA2S5g7w';
+
 export const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 
 export const STATUSES = [

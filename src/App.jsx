@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -7,8 +8,15 @@ import Groups from './pages/Groups';
 import Clients from './pages/Clients';
 import ClientDetail from './pages/ClientDetail';
 import Settings from './pages/Settings';
+import useAppStore from './store/appStore';
 
 export default function App() {
+  const syncSheet = useAppStore((s) => s.syncSheet);
+
+  useEffect(() => {
+    syncSheet();
+  }, []);
+
   return (
     <BrowserRouter>
       <ErrorBoundary>

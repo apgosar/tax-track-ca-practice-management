@@ -2,9 +2,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { SAMPLE_CLIENTS } from '../data/clients';
 import { DEFAULT_STAFF, makeStaffFromNames } from '../data/staff';
-import { SHEET_CSV_URL } from '../data/constants';
+import { SHEET_CSV_URL, COLUMN_MAP } from '../data/constants';
 import Papa from 'papaparse';
-import { COLUMN_MAP } from '../data/constants';
 
 function parseRow(row, index) {
   const cols = Array.isArray(row) ? row : Object.values(row);
@@ -31,7 +30,6 @@ const useAppStore = create(
       clients: SAMPLE_CLIENTS,
       staff: DEFAULT_STAFF,
       lastSynced: null,
-      sheetUrl: SHEET_CSV_URL,
       isSyncing: false,
       syncError: null,
 
@@ -50,8 +48,6 @@ const useAppStore = create(
 
       // Resolved flags
       resolvedFlags: new Set(),
-
-      setSheetUrl: (url) => set({ sheetUrl: url }),
 
       setFilter: (key, value) =>
         set((s) => ({ filters: { ...s.filters, [key]: value } })),
@@ -91,10 +87,9 @@ const useAppStore = create(
       },
 
       syncSheet: async () => {
-        const { sheetUrl } = get();
         set({ isSyncing: true, syncError: null });
         try {
-          const res = await fetch(sheetUrl);
+          const res = await fetch(SHEET_CSV_URL);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const text = await res.text();
           const { data } = Papa.parse(text, { skipEmptyLines: true });
@@ -115,7 +110,6 @@ const useAppStore = create(
     {
       name: 'taxtrack-store',
       partialize: (s) => ({
-        sheetUrl: s.sheetUrl,
         lastSynced: s.lastSynced,
         clients: s.clients,
         staff: s.staff,
