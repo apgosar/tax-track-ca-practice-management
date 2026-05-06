@@ -10,4 +10,4 @@ gcloud run deploy taxtrack `
     --project taxtrack-495412 `
     --region asia-south1 `
     --allow-unauthenticated `
-    --build-env-vars $buildEnvVars
+    --set-build-env-vars $buildEnvVars
